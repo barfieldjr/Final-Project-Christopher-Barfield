@@ -65,8 +65,11 @@ public class GameController {
         return repo.findAll();
     }
 
+
+
+
     // Search game  by Studio
-    @GetMapping("/games/{studio}")
+    @GetMapping("/games/Studio/{studio}")
     @ResponseStatus(HttpStatus.OK)
     public Set<Game> GetGameByStudio(@PathVariable String studio){
         Set<Game> gameList = new HashSet<>();
@@ -79,7 +82,7 @@ public class GameController {
     }
 
     // Search game ESRB
-    @GetMapping("/games/{esrb}")
+    @GetMapping("/games/ESRB/{esrb}")
     @ResponseStatus(HttpStatus.OK)
     public Set<Game> GetGameByESRB(@PathVariable String esrb){
         Set<Game> gameList = new HashSet<>();
@@ -92,7 +95,7 @@ public class GameController {
     }
 
     // Search game Title
-    @GetMapping("/games/{title}")
+    @GetMapping("/games/Title/{title}")
     @ResponseStatus(HttpStatus.OK)
     public Set<Game> GetGameByTitle(@PathVariable String title){
         Set<Game> gameList = new HashSet<>();
