@@ -71,40 +71,25 @@ public class GameController {
     // Search game  by Studio
     @GetMapping("/games/Studio/{studio}")
     @ResponseStatus(HttpStatus.OK)
-    public Set<Game> GetGameByStudio(@PathVariable String studio){
-        Set<Game> gameList = new HashSet<>();
-        for (Game  g:repo.findAll()){
-            if (g.getStudio() == studio){
-                gameList.add(g);
-            }
-        }
-        return gameList;
+    public List<Game> GetGameByStudio(@PathVariable String studio){
+
+        return repo.findAllByStudio(studio);
     }
 
     // Search game ESRB
     @GetMapping("/games/ESRB/{esrb}")
     @ResponseStatus(HttpStatus.OK)
-    public Set<Game> GetGameByESRB(@PathVariable String esrb){
-        Set<Game> gameList = new HashSet<>();
-        for (Game  g:repo.findAll()){
-            if (g.getEsrb_rating() == esrb){
-                gameList.add(g);
-            }
-        }
-        return gameList;
+    public List<Game> GetGameByESRB(@PathVariable String esrb){
+
+        return repo.findAllByEsrbRating(esrb);
     }
 
     // Search game Title
     @GetMapping("/games/Title/{title}")
     @ResponseStatus(HttpStatus.OK)
-    public Set<Game> GetGameByTitle(@PathVariable String title){
-        Set<Game> gameList = new HashSet<>();
-        for (Game  g:repo.findAll()){
-            if (g.getTitle() == title){
-                gameList.add(g);
-            }
-        }
-        return gameList;
+    public List<Game> GetGameByTitle(@PathVariable String title){
+
+        return repo.findAllByTitle(title);
     }
 
 
