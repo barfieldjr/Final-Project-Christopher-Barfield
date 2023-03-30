@@ -2,6 +2,7 @@ package com.company.gamestore.controller;
 
 import com.company.gamestore.model.Console;
 import com.company.gamestore.repository.ConsoleRepository;
+import com.company.gamestore.service.ServiceLayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
@@ -12,35 +13,40 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-@Repository
+@RestController
 public class ConsoleController {
+// json body to test post. If you want to do update,
+// don't forget to also put the id attribute inside this jsonbody
+//    {
+//        "model": "Nintendo Switch",
+//            "manufacturer": "Nintendo",
+//            "memoryAmount": "1T",
+//            "processor": "NVIDIA Custom Tegra processor",
+//            "price": 299.99,
+//            "quantity": 100
+//    }
 
     @Autowired
-    ConsoleRepository repo;
+    ServiceLayer serviceLayer;
 
     // Create a console
     @PostMapping("/consoles")
     @ResponseStatus(HttpStatus.CREATED)
     public Console createNewConsole(@RequestBody Console console){
-        return repo.save(console);
+        return serviceLayer.saveConsole(console);
     }
 
     // Get a Console by ID
     @GetMapping("/consoles/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Console getConsole(@PathVariable int id){
-        Optional<Console> value = repo.findById(id);
-        if(value.isPresent()){
-            return value.get();
-        } else{
-            return null;
-        }
+    public Console getConsoleById(@PathVariable int id){
+        return serviceLayer.findConsole(id);
     }
 
     // Get all consoles
     @GetMapping("/consoles")
     public List<Console> getAllConsoles() {
-        return repo.findAll();
+        return serviceLayer.getAllConsoles();
     }
 
 
@@ -48,27 +54,22 @@ public class ConsoleController {
     @PutMapping("/consoles")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateExistingConsole(@RequestBody Console console) {
-        repo.save(console);
+        serviceLayer.updateConsole(console);
     }
 
     // Delete a console
     @DeleteMapping("/consoles/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteConsole(@PathVariable int id) {
-        repo.deleteById(id);
+        serviceLayer.deleteConsole(id);
     }
 
     // Get consoles by manufacturer
-    @GetMapping("/consoles/{manufacturer}")
+    @GetMapping("/consoles/manufacturers/{manufacturer}")
     @ResponseStatus(HttpStatus.OK)
-    public Set<Console> getConsolesId(@PathVariable String manufacturer){
-        Set<Console> consolesList= new HashSet<>();
-        for (Console c: repo.findAll()) {
-            if (c.getManufacturer() == manufacturer) {
-                consolesList.add(c);
-            }
-        }
-        return consolesList;
+    public List<Console> getConsolesByManufacturer(@PathVariable String manufacturer){
+
+        return serviceLayer.getAllConsolesByManufacturer(manufacturer);
     }
 
 

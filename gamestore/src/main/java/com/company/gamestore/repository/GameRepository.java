@@ -1,4 +1,4 @@
-package com.company.gamestore.repositories;
+package com.company.gamestore.repository;
 
 
 import com.company.gamestore.model.Game;

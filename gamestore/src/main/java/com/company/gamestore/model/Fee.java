@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
 @Table(name = "fee")
@@ -39,5 +40,25 @@ public class Fee {
         this.fee = fee;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Fee fee1 = (Fee) o;
+        return Double.compare(fee1.fee, fee) == 0 && Objects.equals(productType, fee1.productType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(productType, fee);
+    }
+
+    @Override
+    public String toString() {
+        return "Fee{" +
+                "productType='" + productType + '\'' +
+                ", fee=" + fee +
+                '}';
+    }
 }
 
