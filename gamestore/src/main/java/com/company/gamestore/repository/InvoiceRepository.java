@@ -9,9 +9,9 @@ import java.util.List;
 @Repository
 public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
 
-    Invoice findById(int id);
+    //List<Invoice> findByItemTypeAndItemId(String itemType, int itemId);
 
-    List<Invoice> findByItemTypeAndItemId(String itemType, int itemId);
+    List<Invoice> findByName(String name);
 }
 
 

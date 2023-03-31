@@ -2,20 +2,43 @@ package com.company.gamestore.controller;
 
 import com.company.gamestore.model.Invoice;
 import com.company.gamestore.repository.InvoiceRepository;
+import com.company.gamestore.service.ServiceLayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
-@RequestMapping("/invoices")
 public class InvoiceController {
+// Test post and put request with this Json body
+//    {
+//        "name": "John Doe",
+//            "street": "123 Main St",
+//            "city": "Anytown",
+//            "state": "CA",
+//            "zipcode": "12345",
+//            "itemType": "Console",
+//            "itemId": 1,
+//            "unitPrice": 299.99,
+//            "quantity": 2,
+//            "subtotal": 599.98,
+//            "tax": 45.00,
+//            "processingFee": 10.00,
+//            "total": 654.98
+//    }
+
+
 
     @Autowired
-    private InvoiceRepository invoiceRepository;
-    @PostMapping("")
-    public ResponseEntity<Invoice> createInvoice(@RequestBody Invoice invoice)  {
-        return  new ResponseEntity<>(HttpStatus.OK);
+    ServiceLayer serviceLayer;
+
+    @PostMapping("/invoices")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Invoice createInvoice(@RequestBody Invoice invoice)  {
+        return  serviceLayer.saveInvoice(invoice);
     }
 
     private double calculateTax(String state, double subtotal) {
@@ -180,10 +203,24 @@ public class InvoiceController {
         return 0.0;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Invoice> getInvoiceById(@PathVariable("id") Integer id)  {
-        return new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping("invoices/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Invoice getInvoiceById(@PathVariable int id)  {
+        return serviceLayer.findInvoice(id);
     }
+
+    @GetMapping("/invoices")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Invoice> getAllInvoices()  {
+        return serviceLayer.getAllInvoices();
+    }
+
+    @GetMapping("invoices/customer/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Invoice> getInvoiceByCustomerName(@PathVariable String name)  {
+        return serviceLayer.getAllInvoicesByCustomerName(name);
+    }
+
 
 
 }

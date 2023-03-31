@@ -1,45 +1,42 @@
 package com.company.gamestore.controller;
 
 import com.company.gamestore.model.Game;
-import com.company.gamestore.repositories.GameRepository;
+import com.company.gamestore.repository.GameRepository;
+import com.company.gamestore.service.ServiceLayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
 public class GameController {
+
+//    {
+//        "title": "Super Mario Odyssey",
+//            "esrbRating": "E",
+//            "description": "Join Mario on a massive, globe-trotting 3D adventure!",
+//            "price": 59.99,
+//            "studio": "Nintendo",
+//            "quantity": 50
+//    }
+
     @Autowired
-    GameRepository repo;
+    ServiceLayer serviceLayer;
 
 
     // Create a new Game information
     @PostMapping("/games")
     @ResponseStatus(HttpStatus.CREATED)
     public Game addGameInformation (@RequestBody Game game){
-        return repo.save(game);
+        return serviceLayer.saveGame(game);
     }
 
     // Find a  Game  by id
     @GetMapping("/games/{id}")
     public Game findGameInfoById(@PathVariable int id){
-
-        //Checking with optional if there is actually a game with that id
-        Optional<Game> gameFromRepo = repo.findById(id);
-        if (gameFromRepo.isPresent()){
-            //If we find a  game with the given id
-            //then return it
-            return gameFromRepo.get();
-
-        } else {
-            //If we don't find any game  with that id
-            //then return nothing
-            return null;
-        }
+        return serviceLayer.findGame(id);
     }
 
     //Update  Game
@@ -48,7 +45,7 @@ public class GameController {
     public void updateGameInfo(@RequestBody Game game){
         //When  updating, the user must provide the json body of the  game including its id
         // send to this path in order for JPA to update  and not add a new game info
-        repo.save(game);
+        serviceLayer.updateGame(game);
     }
 
 
@@ -56,13 +53,13 @@ public class GameController {
     @DeleteMapping("/games/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteGameInfo(@PathVariable int  id){
-        repo.deleteById(id);
+        serviceLayer.deleteGame(id);
     }
 
     //Read all Game info's
     @GetMapping("/allgameinfo")
     public List<Game> findAllGames(){
-        return repo.findAll();
+        return serviceLayer.getAllGames();
     }
 
 
@@ -73,7 +70,7 @@ public class GameController {
     @ResponseStatus(HttpStatus.OK)
     public List<Game> GetGameByStudio(@PathVariable String studio){
 
-        return repo.findAllByStudio(studio);
+        return serviceLayer.getAllGamesByStudio(studio);
     }
 
     // Search game ESRB
@@ -81,7 +78,7 @@ public class GameController {
     @ResponseStatus(HttpStatus.OK)
     public List<Game> GetGameByESRB(@PathVariable String esrb){
 
-        return repo.findAllByEsrbRating(esrb);
+        return serviceLayer.getAllGamesByESRB(esrb);
     }
 
     // Search game Title
@@ -89,7 +86,7 @@ public class GameController {
     @ResponseStatus(HttpStatus.OK)
     public List<Game> GetGameByTitle(@PathVariable String title){
 
-        return repo.findAllByTitle(title);
+        return serviceLayer.getAllGamesByTitle(title);
     }
 
 

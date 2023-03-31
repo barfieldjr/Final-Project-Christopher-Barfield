@@ -14,7 +14,8 @@ public class Game {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer game_id;
+    @Column(name = "game_id")
+    private Integer gameId;
 
     private String title;
 
@@ -34,8 +35,8 @@ public class Game {
 
     }
 
-    public Game(Integer game_id, String title, String esrbRating, String description, BigDecimal price, String studio, Integer quantity) {
-        this.game_id = game_id;
+    public Game(Integer gameId, String title, String esrbRating, String description, BigDecimal price, String studio, Integer quantity) {
+        this.gameId = gameId;
         this.title = title;
         this.esrbRating = esrbRating;
         this.description = description;
@@ -44,12 +45,12 @@ public class Game {
         this.quantity = quantity;
     }
 
-    public Integer getGame_id() {
-        return game_id;
+    public Integer getGameId() {
+        return gameId;
     }
 
-    public void setGame_id(Integer game_id) {
-        this.game_id = game_id;
+    public void setGameId(Integer gameId) {
+        this.gameId = gameId;
     }
 
     public String getTitle() {
@@ -101,9 +102,22 @@ public class Game {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Game game = (Game) o;
+        return Objects.equals(gameId, game.gameId) && Objects.equals(title, game.title) && Objects.equals(esrbRating, game.esrbRating) && Objects.equals(description, game.description) && Objects.equals(price, game.price) && Objects.equals(studio, game.studio) && Objects.equals(quantity, game.quantity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(gameId, title, esrbRating, description, price, studio, quantity);
+    }
+
+    @Override
     public String toString() {
         return "Game{" +
-                "game_id=" + game_id +
+                "gameId=" + gameId +
                 ", title='" + title + '\'' +
                 ", esrbRating='" + esrbRating + '\'' +
                 ", description='" + description + '\'' +

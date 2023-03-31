@@ -2,6 +2,7 @@ package com.company.gamestore.controller;
 
 import com.company.gamestore.model.Tshirt;
 import com.company.gamestore.repository.TshirtRepository;
+import com.company.gamestore.service.ServiceLayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,32 +15,39 @@ import java.util.Set;
 @RestController
 public class TshirtController {
 
+//    {
+//        "tShirtId": 3,
+//            "size": "L",
+//            "color": "Blue",
+//            "description": "A comfortable and stylish T-shirt for everyday wear",
+//            "price": 19.99,
+//            "quantity": 20
+//    }
+
+
+
+
     @Autowired
-    TshirtRepository repo;
+    ServiceLayer serviceLayer;
 
     // Create a Tshirt
     @PostMapping("/tshirts")
     @ResponseStatus(HttpStatus.CREATED)
     public Tshirt createNewTshirt(@RequestBody Tshirt tshirt){
-        return repo.save(tshirt);
+        return serviceLayer.saveTshirt(tshirt);
     }
 
     // Get a Tshirt by ID
     @GetMapping("/tshirts/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Tshirt getTshirt(@PathVariable int id){
-        Optional<Tshirt> value = repo.findById(id);
-        if(value.isPresent()){
-            return value.get();
-        } else{
-            return null;
-        }
+        return serviceLayer.findTshirt(id);
     }
 
     // Get all Tshirts
     @GetMapping("/tshirts")
     public List<Tshirt> getAllTshirts() {
-        return repo.findAll();
+        return serviceLayer.getAllTshirts();
     }
 
 
@@ -47,39 +55,27 @@ public class TshirtController {
     @PutMapping("/tshirts")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateExistingTshirt(@RequestBody Tshirt tshirt) {
-        repo.save(tshirt);
+        serviceLayer.updateTshirt(tshirt);
     }
 
     // Delete a Tshirt
     @DeleteMapping("/tshirts/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTshirt(@PathVariable int id) {
-        repo.deleteById(id);
+        serviceLayer.deleteTshirt(id);
     }
 
     // Search for Tshirts by color
-    @GetMapping("/tshirts/{color}")
+    @GetMapping("/tshirts/color/{color}")
     @ResponseStatus(HttpStatus.OK)
-    public Set<Tshirt > GetTshirtsByColor(@PathVariable String color){
-        Set<Tshirt> tshirtList= new HashSet<>();
-        for (Tshirt t: repo.findAll()) {
-            if (t.getColor() == color) {
-                tshirtList.add(t);
-            }
-        }
-        return tshirtList;
+    public List<Tshirt> GetTshirtsByColor(@PathVariable String color){
+        return serviceLayer.getAllTshirtsByColor(color);
     }
 
     // Search for Tshirts by size
-    @GetMapping("/tshirts/{size}")
+    @GetMapping("/tshirts/size/{size}")
     @ResponseStatus(HttpStatus.OK)
-    public Set<Tshirt > GetTshirtsBySize(@PathVariable String size){
-        Set<Tshirt> tshirtList= new HashSet<>();
-        for (Tshirt t: repo.findAll()) {
-            if (t.getSize() == size) {
-                tshirtList.add(t);
-            }
-        }
-        return tshirtList;
+    public List<Tshirt> GetTshirtsBySize(@PathVariable String size){
+        return serviceLayer.getAllTshirtBySize(size);
     }
 }
