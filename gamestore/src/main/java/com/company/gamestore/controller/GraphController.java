@@ -52,8 +52,8 @@ public class GraphController {
     }
 
     @QueryMapping
-    public Console findConsoleById(@Argument Integer id){
-        return serviceLayer.findConsole(id);
+    public Console findConsoleById(@Argument Integer consoleId){
+        return serviceLayer.findConsole(consoleId);
     }
 
     @QueryMapping

@@ -7,6 +7,7 @@ public class CustomErrorResponse {
 
     String errorMsg;
     int status;
+
     String errorCode;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     LocalDateTime timestamp;

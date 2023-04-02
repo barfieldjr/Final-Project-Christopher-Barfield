@@ -3,6 +3,7 @@ package com.company.gamestore.controller;
 import com.company.gamestore.model.Invoice;
 import com.company.gamestore.repository.InvoiceRepository;
 import com.company.gamestore.service.ServiceLayer;
+import com.company.gamestore.viewmodel.InvoiceViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,21 +15,16 @@ import java.util.Optional;
 @RestController
 public class InvoiceController {
 // Test post and put request with this Json body
-//    {
-//        "name": "John Doe",
-//            "street": "123 Main St",
-//            "city": "Anytown",
-//            "state": "CA",
-//            "zipcode": "12345",
-//            "itemType": "Console",
-//            "itemId": 1,
-//            "unitPrice": 299.99,
-//            "quantity": 2,
-//            "subtotal": 599.98,
-//            "tax": 45.00,
-//            "processingFee": 10.00,
-//            "total": 654.98
-//    }
+//        {
+//            "name": "Customer 1",
+//                "street": "100 Main Street",
+//                "city": "Clovis",
+//                "state": "CA",
+//                "zipcode": "93612",
+//                "itemType": "Game",
+//                "itemId": 269,
+//                "quantity": 12
+//        }
 
 
 
@@ -37,7 +33,7 @@ public class InvoiceController {
 
     @PostMapping("/invoices")
     @ResponseStatus(HttpStatus.CREATED)
-    public Invoice createInvoice(@RequestBody Invoice invoice)  {
+    public InvoiceViewModel createInvoice(@RequestBody InvoiceViewModel invoice)  {
         return  serviceLayer.saveInvoice(invoice);
     }
 
