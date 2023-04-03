@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -32,14 +33,14 @@ public class ConsoleController {
     // Create a console
     @PostMapping("/consoles")
     @ResponseStatus(HttpStatus.CREATED)
-    public Console createNewConsole(@RequestBody Console console){
+    public Console createNewConsole(@RequestBody @Valid Console console){
         return serviceLayer.saveConsole(console);
     }
 
     // Get a Console by ID
     @GetMapping("/consoles/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Console getConsoleById(@PathVariable int id){
+    public Console getConsoleById(@PathVariable @Valid int id){
         return serviceLayer.findConsole(id);
     }
 
@@ -53,21 +54,21 @@ public class ConsoleController {
     // Update a console
     @PutMapping("/consoles")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateExistingConsole(@RequestBody Console console) {
+    public void updateExistingConsole(@RequestBody @Valid Console console) {
         serviceLayer.updateConsole(console);
     }
 
     // Delete a console
     @DeleteMapping("/consoles/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteConsole(@PathVariable int id) {
+    public void deleteConsole(@PathVariable @Valid int id) {
         serviceLayer.deleteConsole(id);
     }
 
     // Get consoles by manufacturer
     @GetMapping("/consoles/manufacturers/{manufacturer}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Console> getConsolesByManufacturer(@PathVariable String manufacturer){
+    public List<Console> getConsolesByManufacturer(@PathVariable @Valid String manufacturer){
 
         return serviceLayer.getAllConsolesByManufacturer(manufacturer);
     }

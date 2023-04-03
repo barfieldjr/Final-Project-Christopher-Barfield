@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,20 +30,20 @@ public class GameController {
     // Create a new Game information
     @PostMapping("/games")
     @ResponseStatus(HttpStatus.CREATED)
-    public Game addGameInformation (@RequestBody Game game){
+    public Game addGameInformation (@RequestBody @Valid Game game){
         return serviceLayer.saveGame(game);
     }
 
     // Find a  Game  by id
     @GetMapping("/games/{id}")
-    public Game findGameInfoById(@PathVariable int id){
+    public Game findGameInfoById(@PathVariable @Valid int id){
         return serviceLayer.findGame(id);
     }
 
     //Update  Game
     @PutMapping("/games")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateGameInfo(@RequestBody Game game){
+    public void updateGameInfo(@RequestBody @Valid Game game){
         //When  updating, the user must provide the json body of the  game including its id
         // send to this path in order for JPA to update  and not add a new game info
         serviceLayer.updateGame(game);
@@ -52,7 +53,7 @@ public class GameController {
     //Delete  Game
     @DeleteMapping("/games/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteGameInfo(@PathVariable int  id){
+    public void deleteGameInfo(@PathVariable @Valid int id){
         serviceLayer.deleteGame(id);
     }
 
@@ -68,7 +69,7 @@ public class GameController {
     // Search game  by Studio
     @GetMapping("/games/Studio/{studio}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Game> GetGameByStudio(@PathVariable String studio){
+    public List<Game> GetGameByStudio(@PathVariable @Valid String studio){
 
         return serviceLayer.getAllGamesByStudio(studio);
     }
@@ -76,7 +77,7 @@ public class GameController {
     // Search game ESRB
     @GetMapping("/games/ESRB/{esrb}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Game> GetGameByESRB(@PathVariable String esrb){
+    public List<Game> GetGameByESRB(@PathVariable @Valid String esrb){
 
         return serviceLayer.getAllGamesByESRB(esrb);
     }
@@ -84,7 +85,7 @@ public class GameController {
     // Search game Title
     @GetMapping("/games/Title/{title}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Game> GetGameByTitle(@PathVariable String title){
+    public List<Game> GetGameByTitle(@PathVariable @Valid String title){
 
         return serviceLayer.getAllGamesByTitle(title);
     }
