@@ -106,7 +106,7 @@ public class ServiceLayer {
 
     public List<Game> getAllGamesByESRB(String esrb){
         String cleanedESRB = esrb;
-        System.out.println(esrb + " despues:" +cleanedESRB);
+
         if (esrb.startsWith("\"") && esrb.endsWith("\"")) {
             cleanedESRB = esrb.substring(1, esrb.length() - 1); // remove quotes only if they are at the beginning and end of the string
         }
@@ -175,9 +175,9 @@ public class ServiceLayer {
 
         }else if(viewModel.getItemType().equals("Game") ){
             //If it is a game then we use the Game Repository to check if the id provided is in one of our items inside the repo
-            System.out.println(viewModel.getItemId());
+
             Optional<Game> game = gameRepository.findById(viewModel.getItemId()); // this Optional returns -> True or False
-            System.out.println(game);
+
             //Hand
             if(!game.isPresent()){
                 throw new IllegalArgumentException("There is no item in the Game section attached to Item ID: " + viewModel.getItemId());
@@ -423,6 +423,7 @@ public class ServiceLayer {
         //Making this viewmodel point to our updated invoice
         viewModel.setId(userInvoice.getId());
 
+        // Removing either Game, Console, or Tshirt if supply is down to 0.]
         if(removeGame){
             gameRepository.deleteById(foundGame.getGameId());
         }
