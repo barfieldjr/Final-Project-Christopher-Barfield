@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,7 +34,7 @@ public class InvoiceController {
 
     @PostMapping("/invoices")
     @ResponseStatus(HttpStatus.CREATED)
-    public InvoiceViewModel createInvoice(@RequestBody InvoiceViewModel invoice)  {
+    public InvoiceViewModel createInvoice(@Valid @RequestBody  InvoiceViewModel invoice)  {
         return  serviceLayer.saveInvoice(invoice);
     }
 

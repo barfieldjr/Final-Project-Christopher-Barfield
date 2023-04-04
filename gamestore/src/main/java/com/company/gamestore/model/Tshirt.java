@@ -3,6 +3,7 @@ package com.company.gamestore.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -16,14 +17,19 @@ public class Tshirt {
     @Column(name = "tshirt_id")
     private int tShirtId;
 
+    @NotEmpty(message = "You must supply a size.")
     private String size;
 
+    @NotEmpty(message = "You must supply a color.")
     private String color;
 
+    @NotEmpty(message = "You must supply a description.")
     private String description;
 
+    @NotEmpty(message = "You must supply a price.")
     private BigDecimal price;
 
+    @NotEmpty(message = "You must supply a quantity.")
     private int quantity;
 
     public Tshirt(){

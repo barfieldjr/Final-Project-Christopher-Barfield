@@ -5,6 +5,7 @@ import com.company.gamestore.repository.ConsoleRepository;
 import com.company.gamestore.service.ServiceLayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,7 +41,7 @@ public class ConsoleController {
     // Get a Console by ID
     @GetMapping("/consoles/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Console getConsoleById(@PathVariable @Valid int id){
+    public Console getConsoleById(@PathVariable int id){
         return serviceLayer.findConsole(id);
     }
 
@@ -61,14 +62,14 @@ public class ConsoleController {
     // Delete a console
     @DeleteMapping("/consoles/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteConsole(@PathVariable @Valid int id) {
+    public void deleteConsole(@PathVariable int id) {
         serviceLayer.deleteConsole(id);
     }
 
     // Get consoles by manufacturer
     @GetMapping("/consoles/manufacturers/{manufacturer}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Console> getConsolesByManufacturer(@PathVariable @Valid String manufacturer){
+    public List<Console> getConsolesByManufacturer(@PathVariable String manufacturer){
 
         return serviceLayer.getAllConsolesByManufacturer(manufacturer);
     }

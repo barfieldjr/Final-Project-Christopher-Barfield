@@ -100,5 +100,4 @@ public class ServiceLayerTest {
         assertEquals(gameList, fromService);
 
     }
-
 }

@@ -41,7 +41,7 @@ public class TshirtController {
     // Get a Tshirt by ID
     @GetMapping("/tshirts/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Tshirt getTshirt(@PathVariable @Valid int id){
+    public Tshirt getTshirt(@PathVariable int id){
         return serviceLayer.findTshirt(id);
     }
 
@@ -62,21 +62,21 @@ public class TshirtController {
     // Delete a Tshirt
     @DeleteMapping("/tshirts/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteTshirt(@PathVariable @Valid int id) {
+    public void deleteTshirt(@PathVariable int id) {
         serviceLayer.deleteTshirt(id);
     }
 
     // Search for Tshirts by color
     @GetMapping("/tshirts/color/{color}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Tshirt> GetTshirtsByColor(@PathVariable @Valid String color){
+    public List<Tshirt> GetTshirtsByColor(@PathVariable String color){
         return serviceLayer.getAllTshirtsByColor(color);
     }
 
     // Search for Tshirts by size
     @GetMapping("/tshirts/size/{size}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Tshirt> GetTshirtsBySize(@PathVariable @Valid String size){
+    public List<Tshirt> GetTshirtsBySize(@PathVariable String size){
         return serviceLayer.getAllTshirtBySize(size);
     }
 
