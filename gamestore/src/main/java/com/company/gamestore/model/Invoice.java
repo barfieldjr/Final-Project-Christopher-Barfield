@@ -1,6 +1,9 @@
 package com.company.gamestore.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -13,30 +16,39 @@ public class Invoice {
     @Column(name = "invoice_id")
     private Integer id;
 
+    @NotEmpty(message = "You must supply a Name.")
     @Column(name = "name")
     private String name;
 
+    @NotEmpty(message = "You must supply a Street.")
     @Column(name = "street")
     private String street;
 
+    @NotEmpty(message = "You must supply a City.")
     @Column(name = "city")
     private String city;
 
+    @NotEmpty(message = "You must supply a State.")
     @Column(name = "state")
     private String state;
 
+    @NotEmpty(message = "You must supply a ZIP Code.")
     @Column(name = "zipcode")
     private String zipcode;
 
+    @NotEmpty(message = "You must supply an Item Type.")
     @Column(name = "item_type")
     private String itemType;
 
+    @NotNull(message = "You must supply an Item ID.")
     @Column(name = "item_id")
     private Integer itemId;
+
 
     @Column(name = "unit_price")
     private BigDecimal unitPrice;
 
+    @Min(value = 1, message = "You must supply a Quantity.")
     @Column(name = "quantity")
     private int quantity;
 

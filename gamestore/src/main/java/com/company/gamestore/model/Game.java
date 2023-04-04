@@ -3,6 +3,7 @@ package com.company.gamestore.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -17,17 +18,23 @@ public class Game {
     @Column(name = "game_id")
     private Integer gameId;
 
+    @NotEmpty(message = "You must supply a title.")
     private String title;
 
+    @NotEmpty(message = "You must supply a esrb Rating.")
     @Column(name = "esrb_rating")
     private String esrbRating;
 
+    @NotEmpty(message = "You must supply a description.")
     private String  description;
 
+    @NotEmpty(message = "You must supply a price.")
     private BigDecimal price;
 
+    @NotEmpty(message = "You must supply a studio.")
     private String studio;
 
+    @NotEmpty(message = "You must supply a quantity.")
     private Integer quantity;
 
 

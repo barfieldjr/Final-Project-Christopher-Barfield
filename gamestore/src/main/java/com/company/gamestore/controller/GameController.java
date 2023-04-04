@@ -36,7 +36,7 @@ public class GameController {
 
     // Find a  Game  by id
     @GetMapping("/games/{id}")
-    public Game findGameInfoById(@PathVariable @Valid int id){
+    public Game findGameInfoById(@PathVariable int id){
         return serviceLayer.findGame(id);
     }
 
@@ -53,7 +53,7 @@ public class GameController {
     //Delete  Game
     @DeleteMapping("/games/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteGameInfo(@PathVariable @Valid int id){
+    public void deleteGameInfo(@PathVariable int id){
         serviceLayer.deleteGame(id);
     }
 
@@ -69,7 +69,7 @@ public class GameController {
     // Search game  by Studio
     @GetMapping("/games/Studio/{studio}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Game> GetGameByStudio(@PathVariable @Valid String studio){
+    public List<Game> GetGameByStudio(@PathVariable String studio){
 
         return serviceLayer.getAllGamesByStudio(studio);
     }
@@ -77,7 +77,7 @@ public class GameController {
     // Search game ESRB
     @GetMapping("/games/ESRB/{esrb}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Game> GetGameByESRB(@PathVariable @Valid String esrb){
+    public List<Game> GetGameByESRB(@PathVariable String esrb){
 
         return serviceLayer.getAllGamesByESRB(esrb);
     }
@@ -85,7 +85,7 @@ public class GameController {
     // Search game Title
     @GetMapping("/games/Title/{title}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Game> GetGameByTitle(@PathVariable @Valid String title){
+    public List<Game> GetGameByTitle(@PathVariable String title){
 
         return serviceLayer.getAllGamesByTitle(title);
     }

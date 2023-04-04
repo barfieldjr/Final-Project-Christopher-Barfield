@@ -1,6 +1,8 @@
 package com.company.gamestore.viewmodel;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -8,22 +10,30 @@ public class InvoiceViewModel {
 
     private int id;
 
+    @NotEmpty(message = "You must supply a Name.")
     private String name;
 
+    @NotEmpty(message = "You must supply a Street.")
     private String street;
 
+    @NotEmpty(message = "You must supply a City.")
     private String city;
 
+    @NotEmpty(message = "You must supply a State.")
     private  String state;
 
+    @NotEmpty(message = "You must supply a ZIP Code.")
     private  String zipcode;
 
+    @NotEmpty(message = "You must supply an Item Type.")
     private  String itemType;
 
+    @NotNull(message = "You must supply an Item ID.")
     private Integer itemId;
 
     private BigDecimal unitPrice;
 
+    @NotNull(message = "You must supply a Quantity.")
     private Integer  quantity;
 
     private BigDecimal subtotal;

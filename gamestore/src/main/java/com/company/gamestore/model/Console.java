@@ -4,6 +4,7 @@ package com.company.gamestore.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -17,17 +18,23 @@ public class Console {
     @Column(name = "console_id")
     private int consoleId;
 
+    @NotEmpty(message = "You must supply a Model")
     private String model;
 
+    @NotEmpty(message = "You must supply a manufacturer")
     private String manufacturer;
 
+    @NotEmpty(message = "You must supply a Memory Amount")
     @Column(name = "memory_amount")
     private String memoryAmount;
 
+    @NotEmpty(message = "You must supply a Processor")
     private String processor;
 
+    @NotEmpty(message = "You must supply a Price")
     private BigDecimal price;
 
+    @NotEmpty(message = "You must supply a Quantity")
     private int quantity;
 
     public Console(){
