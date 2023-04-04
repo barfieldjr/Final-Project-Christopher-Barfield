@@ -1,6 +1,7 @@
 package com.company.gamestore.viewmodel;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -33,7 +34,7 @@ public class InvoiceViewModel {
 
     private BigDecimal unitPrice;
 
-    @NotNull(message = "You must supply a Quantity.")
+    @Min(value = 1, message = "You must supply a Quantity.")
     private Integer  quantity;
 
     private BigDecimal subtotal;

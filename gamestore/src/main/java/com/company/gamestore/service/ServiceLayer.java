@@ -155,6 +155,19 @@ public class ServiceLayer {
 
         //Checking Type
 
+        //Checking for Game removal
+        Game foundGame = null;
+        boolean removeGame = false;
+
+        //Checking for Console removal
+        Console foundConsole = null;
+        boolean removeConsole = false;
+
+
+        //Checking for TShirt removal
+        Tshirt foundTShirt = null;
+        boolean removeTshirt = false;
+
 
         if (!viewModel.getItemType().equals("Game") && !viewModel.getItemType().equals("Console") && !viewModel.getItemType().equals("T-Shirt")){
             //If  the given item is not  the type that we accept
@@ -176,7 +189,6 @@ public class ServiceLayer {
             ////Getting the actual Game Object in order to check the quantity
 
             //initialize variable that will store the Object of the Game(This will not be null since we already checked that is inside the repository)
-            Game foundGame = null;
 
             //Getting by id but using for loop
             for(Game itemGame : gameRepository.findAll()){
@@ -191,22 +203,20 @@ public class ServiceLayer {
                 //then throw error
                 throw new IllegalArgumentException("There is an insufficient quantity of items. There are only: " + foundGame.getQuantity() + " available.");
             }
-
-            // Now remove Games depending on how many the user bought
-            Integer quantityBought = viewModel.getQuantity();
-            Integer quantityAvailable = foundGame.getQuantity();
-
             //new quantity value for the Game
-            if(quantityAvailable.equals(quantityBought)){
-                gameRepository.deleteById(foundGame.getGameId());
-            } else {
+
+            if(foundGame.getQuantity() == viewModel.getQuantity()){
+                removeGame = true;
+            }
+            else {
+                // Now remove Games depending on how many the user bought
+                Integer quantityBought = viewModel.getQuantity();
+                Integer quantityAvailable = foundGame.getQuantity();
 
                 quantityAvailable -= quantityBought; // now we can use quantity available variable to update the game
                 foundGame.setQuantity(quantityAvailable);
                 //updating with new quantity
                 gameRepository.save(foundGame);
-
-                System.out.println("GAMES LEFT AFTER PURCHASE: " + quantityAvailable + " ********************");
             }
 
 
@@ -229,7 +239,7 @@ public class ServiceLayer {
             //Getting the actual Game Object in order to check the quantity
 
             //initialize variable that will store the Object of the Game(This will not be null since we already checked that is inside the repository)
-            Console foundConsole = null;
+
 
             //Getting by id but using for loop
             for(Console itemConsole : consoleRepository.findAll()){
@@ -244,6 +254,30 @@ public class ServiceLayer {
                 //then throw error
                 throw new IllegalArgumentException("There is an insufficient quantity of items. There are only: " + foundConsole.getQuantity() + " available.");
             }
+            // Now remove Consoles depending on how many the user bought
+            Integer quantityBought = viewModel.getQuantity();
+            Integer quantityAvailable = foundConsole.getQuantity();
+
+            //new quantity value for the Game
+            if(foundConsole.getQuantity() == viewModel.getQuantity()){
+                removeConsole = true;
+            } else {
+
+                quantityAvailable -= quantityBought; // now we can use quantity available variable to update the game
+                foundConsole.setQuantity(quantityAvailable);
+                //updating with new quantity
+                consoleRepository.save(foundConsole);
+            }
+
+
+
+
+
+
+
+
+
+
 
         } else if(viewModel.getItemType().equals("T-Shirt")){
             //If it is a T-Shirt then we use the T-shirt Repository to check if the id provided is in one of our items inside the repo
@@ -273,6 +307,23 @@ public class ServiceLayer {
                 //then throw error
                 throw new IllegalArgumentException("There is an insufficient quantity of items. There are only: " + foundTshirt.getQuantity() + " available.");
             }
+            // Now remove Games depending on how many the user bought
+            Integer quantityBought = viewModel.getQuantity();
+            Integer quantityAvailable = foundTshirt.getQuantity();
+
+            //new quantity value for the Game
+            if(foundTshirt.getQuantity() < viewModel.getQuantity()){
+                removeTshirt = true;
+            } else {
+
+                quantityAvailable -= quantityBought; // now we can use quantity available variable to update the game
+                foundTshirt.setQuantity(quantityAvailable);
+                //updating with new quantity
+                tShirtRepository.save(foundTshirt);
+            }
+
+
+
         }
 
 
@@ -372,7 +423,18 @@ public class ServiceLayer {
         //Making this viewmodel point to our updated invoice
         viewModel.setId(userInvoice.getId());
 
-        return viewModel; // ********** ASK IF THIS IS WHAT WILL BE RETURNED
+        if(removeGame){
+            gameRepository.deleteById(foundGame.getGameId());
+        }
+        if(removeConsole){
+            consoleRepository.deleteById(foundConsole.getConsoleId());
+        }
+        if(removeTshirt){
+            tShirtRepository.deleteById(foundTShirt.gettShirtId());
+        }
+
+        return viewModel;
+
 
 
 

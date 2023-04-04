@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -31,10 +32,10 @@ public class Console {
     @NotEmpty(message = "You must supply a Processor")
     private String processor;
 
-    @NotEmpty(message = "You must supply a Price")
+    @NotNull(message = "You must supply a Price")
     private BigDecimal price;
 
-    @NotEmpty(message = "You must supply a Quantity")
+    @NotNull(message = "You must supply a Quantity")
     private int quantity;
 
     public Console(){

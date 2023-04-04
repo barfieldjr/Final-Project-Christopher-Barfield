@@ -48,7 +48,7 @@ public class Invoice {
     @Column(name = "unit_price")
     private BigDecimal unitPrice;
 
-    @Min(value = 1, message = "You must supply a Quantity.")
+    @NotNull(message = "You must supply a Quantity.")
     @Column(name = "quantity")
     private int quantity;
 
