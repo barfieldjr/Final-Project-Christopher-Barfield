@@ -37,10 +37,6 @@ public class ServiceLayer {
         this.tShirtRepository = tShirtRepository;
     }
 
-    //
-    // CONSOLE API
-    //
-
     public Console saveConsole(Console console){
 
         return consoleRepository.save(console);
@@ -68,13 +64,6 @@ public class ServiceLayer {
         String cleanedManufacturer = manufacturer.replaceAll("\"", ""); // remove all quotes from title
         return consoleRepository.findAllByManufacturer(cleanedManufacturer);
     }
-
-
-
-    //
-    // GAME API
-    //
-
 
     public Game saveGame(Game game){
 
@@ -130,18 +119,6 @@ public class ServiceLayer {
 
     @Transactional
     public InvoiceViewModel saveInvoice(InvoiceViewModel viewModel){
-        //We are given by the user this:
-//        {
-//            "name": "Customer 1",
-//                "street": "100 Main Street",
-//                "city": "Clovis",
-//                "state": "CA", ("XW")
-//                "zipcode": "93612",
-//                "itemType": "Game", ***********
-//                "itemId": 269,      ***********
-//                "quantity": 12      ***********
-//        }
-        //Check type, then id, then quantity and then state.
 
         //initialize tax
         BigDecimal taxRate = null;
@@ -218,13 +195,6 @@ public class ServiceLayer {
                 //updating with new quantity
                 gameRepository.save(foundGame);
             }
-
-
-
-
-
-
-
 
 
         } else if(viewModel.getItemType().equals("Console")){
@@ -495,37 +465,5 @@ public class ServiceLayer {
         String cleanedSize = size.replaceAll("\"", ""); // remove all quotes from title
         return tShirtRepository.findAllBySize(cleanedSize);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
